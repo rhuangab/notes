@@ -1,4 +1,4 @@
-# java
+# java blogs
 java 单例模式   https://blog.csdn.net/u014672511/article/details/79774847
 
 java 单例模式访问问题  https://blog.csdn.net/u012613251/article/details/79477525
