@@ -60,52 +60,6 @@ String str = "aa"+"bb"; //这一段代码在jdk1.8中，会被编译器自动优
 
 ------
 
-## 集合类
-
-### ArrayList
-
-ArrayList实现了List接口，实现了动态数组，约等于C++的Vector，但它不是线程安全的，在多线程环境下改变ArrayList结构必须注意同步**（synchronized）**
-
-#### contains()
-
-contains()与HashMap的containsKey相比，效率低很多，因为contains()会遍历整个数组，复杂度有O(n)，而HashMap散列key的方法，主要的开销在遍历散列的拉链，复杂度为O(1)
-
-#### 两个ArrayList 大小比较并更换引用
-
-比如若要比较两个ArrayList的大小，可以交换互相的引用变量
-
-```java
-ArrayList<Integer> cache1 = new ArrayList<Integer>();
-ArrayList<Integer> cache2 = new ArrayList<Integer>();
-cache1.add(1);
-cache2.add(1);
-cache2.add(2);
-/*	exchange reference
-	After comparation, cache1.size()>cache2.size()
-*/
-if(cache1.size()<cache2.size()){
-            ArrayList<Integer> temp = cache1;
-            cache1 = cache2;
-            cache2 = temp;
-        }
-```
-
-
-
-### HashMap
-
-```java
-HashMap<K,V> map  = new HashMap<K,V>();
-```
-
-HashMap：key-value模式，key、value都必须为类，基本数据类型需要声明成包装类，put的时候传入基本数据类型会自动打包。
-
-
-
-
-
-------
-
 ### AOP (Aspect Oriented Programming)
 
 AOP：面向切面编程，是OOP的一种补充。OOP引入封装、继承、多态等概念来建立对象机制，纵向地关注核心功能（如业务处理过程），AOP则收集横向的、分布在核心关注点附近、与业务功能无关的、但为业务模块所共同调用的逻辑或责任封装起来的代码。
