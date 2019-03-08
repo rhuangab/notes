@@ -44,19 +44,31 @@
   System.out.println(s1 == s2);    // false
   ```
 
-  因此，初始化String时，最好用字面量创建字符串，方便直接用常量池中取出使用
 
-- 
+#### new String()
 
-- 以new String("2222") 创建字符串 会生成两个对象
+```java
+String str = new String("aa");
+```
 
-` String s1 = new String("2222")`  
+- 使用new String("aa")的方法，jdk首先把"aa"放入常量池，然后再从常量池中取出"aa"的引用，作为String()构造的参数被传入，完成实例化
 
-#### String 拼接
+#### String + 拼接
 
-String str = "aa"+"bb"; //这一段代码在jdk1.8中，会被编译器自动优化，即字面量提前合成为"aabb"然后再
+```java
+String str = "aa"+"bb"; 
+```
 
-//
+- 这一段代码在jdk1.8下会被编译器自动优化，即"aa" "bb"字面量被提前拼接成"aabb"并放入常量池中，然后从常量池中取出引用赋值给str
+
+#### new String("aa")+new String("bb")+"cc"
+
+- 与上面相似，"aa" "bb"都是从常量池中取出引用
+- 创建一个new String()，以"aa"作为参数（或者作为String.valueOf()的参数），然后调用StringBuilder(String str)。实质是创建一个StringBuilder对象和一个String对象。
+- 进行数次append()之后，调用toString()方法即return
+- PS：在 + 拼接里，凡是用上new String() ，那么这个表达式返回的String值不会被放入到常量池中
+
+**因此，鉴于速度的考虑，我们应尽量使用字面量来进行字符串的拼接**
 
 ------
 
