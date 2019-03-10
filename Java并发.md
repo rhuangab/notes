@@ -1,5 +1,9 @@
 ## Java并发
 
+### Java并发和并行
+
+
+
 ### 线程共享变量可见性原理
 
 - 线程的工作内存：由JMM抽象出的一种内存模型，同一进程下不同线程会有属于私人的本地内存区域。
@@ -64,5 +68,9 @@ public class DDbug implements Runnable{
 }
 ```
 
-- Synchroinzed代码块：负责共享变量的锁
-- Synchronized修饰的方法会锁住当前的实例对象（即 this），Synchroinzed代码块锁住的是传入的对象参数
+- synchronized方法锁住当前实例对象（即 this）
+- synchroinzed代码块锁住的是传入的对象参数  synchroinzed(Object obj)
+- 多线程环境下，要等已经运行到synchronized块的线程释放锁之后，才能再次给对象加锁。即使两个不同的代码段，都要锁同一个对象，那么这两个代码段也不能在多线程环境下同时运行
+  - 全局锁：synchronized(className.class){} //这样的话可以锁住类的class对象
+
+### 

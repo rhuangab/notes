@@ -99,3 +99,52 @@ public class Solution {
 }
 ```
 
+合并两个排序的链表
+
+```java
+
+
+public class Solution {
+    public ListNode Merge(ListNode list1,ListNode list2) {
+    	//in case of null input
+        if(list1==null&&list2==null) return null;
+        //result iterates to the end of the List
+        //ans is the return variable
+        ListNode result = new ListNode(2);
+        ListNode ans = result;
+        while(list1!=null||list2!=null){
+            //none null case
+            if(list1!=null&&list2!=null){
+                if(list1.val<=list2.val){
+                    result.val = list1.val;
+                    list1 = list1.next;
+                }
+                else{
+                    result.val = list2.val;
+                    list2 = list2.next;
+                }
+            }
+            //single null case, directly link the rest of the listNode
+            //sdecrease 50% time cost
+            else{
+                if(list1==null){
+                    result.val = list2.val;
+                    result.next = list2.next;
+                    break;
+                }
+                else{
+                    result.val = list1.val;
+                    result.next= list1.next;
+                    break;
+                }
+            }
+            if(list1==null&&list2==null) break;
+            ListNode cache = new ListNode(2);
+            result.next = cache;
+            result = result.next;
+        }
+        return ans;
+    }
+}
+```
+
