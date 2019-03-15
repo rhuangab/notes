@@ -2,16 +2,22 @@
 
 ### 关键字
 
-#### 1.final
+1. final
+
 - 对于数据：final使数据不变
 
 * 对于引用：不可以改变引用的对象（地址）
 * 对于方法：声明方法不能被子类重写
 
-#### 2.static
+2. static
 
-* 静态变量：又称为类变量，也就是说这个变量属于类的，类所有的实例都共享静态变量，可以直接通过类名来访问它。静态变量在内存中只存在一份。
-* 实例变量：每创建一个实例就会产生一个实例变量，它与该实例同生共死
+* 静态变量：又称为类变量，也就是说这个变量属于类的。类所有的实例都共享静态变量，可以直接通过类名来访问它。静态变量在内存中只存在一份。
+* 实例变量：每创建一个实例就会产生一个实例变量，它与该实例共存亡
+
+3. native  (copy from Stack OverFlow)
+
+- You need to call a library from Java that is written in other language.
+- You need to access system or hardware resources that are only reachable from the other language (typically C). 
 
 ------
 
@@ -89,8 +95,6 @@ IOC为相互依赖的组件提供抽象，通过依赖注入的方式进行控�
 
 ------
 
-
-
 ### 类加载
 
 #### 类内部加载顺序
@@ -101,11 +105,18 @@ IOC为相互依赖的组件提供抽象，通过依赖注入的方式进行控�
 
 #### Class.forName()
 
-Class.forName(String className)保证了一个类被加载，而new实例的类不一定。
+Class.forName(String className)
 
-Class.forNme(String className)实际上把new实例过程解耦，第一步加载类，第二步Class.forNme(String className).newInstance()
+- 保证了一个类被加载，而new实例的类不一定。
+- 实际上把new实例过程解耦合，第一步加载类，第二步Class.forNme(String className).newInstance()
 
+#### ClassLoader工作原理
 
+java默认类的搜索顺序：
+
+- 虚拟机内置的类加载器（Bootstrap ClassLoader）
+- —>Extension ClassLoader
+- —>App ClassLoader (—>抛出ClassNotFoundException异常)
 
 ------
 
@@ -120,3 +131,67 @@ Class.forNme(String className)实际上把new实例过程解耦，第一步加�
 - 第二维度动态申请空间： `int [][] arr3 = new int [5][];`
 
   进行赋值时，每次都要手动申请每个第二维元素的空间
+
+------
+
+### @Override equals()
+
+JDK中类基本都重写了equals方法，比如ArrayList:
+
+Compares the specified object with this list for equality. **Returns`true` if and only if the specified object is also a list, both lists have the same size, and all corresponding pairs of elements in the two lists are *equal*.** (Two elements `e1` and `e2` are *equal* if `(e1==null ? e2==null : e1.equals(e2))`.) In other words, two lists are defined to be equal if they contain the same elements in the same order. This definition ensures that the equals method works properly across different implementations of the `List` interface.
+
+但是在自己写的类方法里，需要重写equals方法
+
+要重写一个方法，最好加上注解@Override（可以不加），因为这样可以告诉编译器这是重写方法，编译器可以提醒重写的方法名、返回类型以及参数与父类被重写方法一致
+
+```java
+class test{
+	int a ;
+	public test(int a) {
+		this.a = a;
+	}
+	@Override
+	public boolean equals(Object o) {
+		if(o==this) return true;
+		if(o==null||getClass()!=o.getClass()) return false;
+		test temp = (test)o;
+		return temp.a == this.a;
+	}
+}	
+```
+
+### instanceof/.getClass()/.class
+
+1. instance of VS getClass()
+
+```java
+System.out.println(t1 instanceof Object);//true 
+Object t1 = new test();
+System.out.println(t1.getClass()==o.getClass());//false 
+```
+
+instanceof：
+
+- 如果t1属于Object类型 或Object类的子类类型 则返回true
+
+getClass()：
+
+- 如果对象的getClass()方法返回值相等（即返回类型相同），则返回true
+- 值得注意的是，getClass()方法返回的是running time type of t1，即test type
+
+2. getClass() VS class
+
+```java
+Object o = new Object();
+System.out.println(Object.class);//class java.lang.Object
+System.out.println(o.getClass());//class java.lang.Object
+```
+
+getClass() 和 .class返回值相同，不过还是有不同点的：
+
+- 如果有对象的引用变量，一般使用o.getClass()
+- 如果有对象的类型，一般使用Object.class
+- 两者的返回并没有明显差别，但是getClass()会依赖JVM平台，调用invokevirtual方法来获取类型值，.class直接根据静态加载的类信息返回，因此.class返回的更快
+
+
+

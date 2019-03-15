@@ -73,4 +73,6 @@ public class DDbug implements Runnable{
 - 多线程环境下，要等已经运行到synchronized块的线程释放锁之后，才能再次给对象加锁。即使两个不同的代码段，都要锁同一个对象，那么这两个代码段也不能在多线程环境下同时运行
   - 全局锁：synchronized(className.class){} //这样的话可以锁住类的class对象
 
+#### java三种高并发https://blog.csdn.net/java_xth/article/details/81162088
+
 ### 
