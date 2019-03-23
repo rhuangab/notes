@@ -1,5 +1,26 @@
 ## java容器
 
+## 一.概览
+
+### List
+
+- ArrayList: 基于动态数组的实现
+
+### 迭代器
+
+Collection 继承了 Iterable 接口，其中的 iterator() 方法能够产生一个 Iterator 对象，通过这个对象就可以迭代遍历 Collection 中的元素。
+
+```java
+ArrayList<Interval> arr = new ArrayList<Interval>();
+		arr.add(new Interval(0,4));
+		arr.add(new Interval(1,4));
+		for(Interval item:arr) {
+			System.out.println(item.start+item.end);
+		}
+```
+
+
+
 ### ArrayList
 
 ArrayList实现了List接口，实现了动态数组，约等于C++的Vector，但它不是线程安全的，在多线程环境下改变ArrayList结构必须注意同步**（synchronized）**
