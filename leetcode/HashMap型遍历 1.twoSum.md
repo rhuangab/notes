@@ -1,7 +1,14 @@
 Two Sum
 
+```
+Given nums = [2, 7, 11, 15], target = 9,
+
+Because nums[0] + nums[1] = 2 + 7 = 9,
+return [0, 1].
+```
+
 ```java
-//两层循环，一层用于往HashMap put 另一层查找
+//两次循环，一层用于HashMap put 另一层常数级别查找
 //the order of the put is (num[i],i) 
 //the first position apply for comparing
 class Solution {
